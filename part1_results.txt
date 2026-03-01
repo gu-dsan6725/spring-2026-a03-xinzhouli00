@@ -1,0 +1,211 @@
+# Question 1
+## Question
+            What Python dependencies does this project use?
+
+            ## Commands Run
+              $ cat pyproject.toml
+  $ find . -maxdepth 4 -name 'package.json' -not -path '*/node_modules/*' -type f
+  $ cat package.json 2>/dev/null || true
+  $ cat cli/package.json 2>/dev/null || true
+  $ cat frontend/package.json 2>/dev/null || true
+  $ find . -type f -not -path '*/.git/*' -not -path '*/node_modules/*' | sed 's/.*\.//' | sort | uniq -c | sort -rn | head -30
+  $ find . -name 'Dockerfile*' -not -path '*/node_modules/*'
+  $ find . -name '*.yaml' -o -name '*.yml' | grep -v node_modules | head -20
+
+            ## Answer
+            The Python dependencies for this project are listed in `pyproject.toml` (lines 6-44). They include:
+
+* `aiofiles`
+* `fastapi`
+* `itsdangerous`
+* `jinja2`
+* `mcp`
+* `pydantic`
+* `pydantic-settings`
+* `httpx`
+* `python-dotenv`
+* `python-multipart`
+* `uvicorn`
+* `faiss-cpu`
+* `sentence-transformers`
+* `websockets`
+* `scikit-learn`
+* `torch`
+* `huggingface-hub`
+* `bandit`
+* `langchain-mcp-adapters`
+* `langgraph`
+* `langchain-aws`
+* `pytz`
+* `strands-agents`
+* `strands-agents-tools`
+* `pyjwt`
+* `typing-extensions`
+* `httpcore`
+* `pyyaml`
+* `langchain-anthropic`
+* `matplotlib`
+* `psutil`
+* `email-validator`
+* `aiohttp`
+* `rich`
+* `requests`
+* `cisco-ai-a2a-scanner`
+* `cisco-ai-skill-scanner`
+* `awscli`
+* `boto3`
+* `motor`
+* `pymongo`
+* `dnspython`
+* `litellm`
+* `cryptography`
+* `prometheus-client`
+
+Additionally, the project has optional dependencies for development, testing, and documentation, listed in the `dev`, `docs`, and `dependency-groups` sections of `pyproject.toml`.
+
+---
+
+# Question 2
+## Question
+          What is the main entry point file for the registry service?
+
+          ## Commands Run
+            $ grep -RIn 'app = FastAPI|if __name__' --include='*.py' registry auth_server | head -n 60
+$ grep -RIn uvicorn --include='*.py' --include='*.toml' --include=Makefile --include='*.sh' . | head -n 40
+$ find . -name 'main.py' -not -path '*/node_modules/*'
+$ cat registry/main.py 2>/dev/null || true
+
+          ## Answer
+          The main entry point file for the registry service is `registry/main.py`. This can be seen in the `grep` output where `uvicorn` is run with `registry.main:app` (`./docker/registry-entrypoint.sh:209`) and also in the output of `find` command (`./registry/main.py`). Additionally, the contents of `registry/main.py` (starting at line 1) indicate that it is the application coordinator for the MCP Gateway Registry.
+
+---
+
+# Question 3
+## Question
+            What programming languages and file types are used in this repository? (e.g., Python, TypeScript, YAML, JSON, Dockerfile, etc.)
+
+            ## Commands Run
+              $ find . -type f -not -path '*/.git/*' -not -path '*/node_modules/*' | sed 's/.*\.//' | sort | uniq -c | sort -rn | head -30
+  $ find . -name 'Dockerfile*' -not -path '*/node_modules/*'
+  $ find . -name '*.yaml' -o -name '*.yml' | grep -v node_modules | head -20
+
+            ## Answer
+            The repository uses the following programming languages and file types:
+- Python (.py) 
+- Markdown (.md) 
+- JSON (.json) 
+- Shell scripts (.sh) 
+- TypeScript (.ts, .tsx) 
+- YAML (.yaml, .yml) 
+- Terraform (.tf) 
+- Dockerfile 
+- HTML (.html) 
+- JavaScript (.js) 
+- CSS (.css) 
+- Lua (.lua) 
+- SQL (.db) 
+- TOML (.toml) 
+- Configuration files (.conf) 
+- Template files (.template, .tpl) 
+- Graphics files (.png, .gif, .svg) 
+- Lock files (.lock) 
+- Text files (.txt) 
+- Patch files (.patch) 
+- Registry files (.registry) 
+- CPU registry files (.registry-cpu) 
+- Scopes initialization files (.scopes-init) 
+
+These file types are found in various directories, including:
+- ./docker/ (Dockerfile)
+- ./auth_server/ (yaml)
+- ./config/ (yaml)
+- ./charts/ (yaml)
+- ./agents/ (Dockerfile)
+- ./metrics-service/ (Dockerfile) 
+(See lines from various `find` commands)
+
+---
+
+# Question 4
+## Question
+            How does the authentication flow work, from token validation to user authorization?
+
+            ## Commands Run
+              $ grep -RIn 'token|jwt|bearer|scope|verify_token|oauth' --include='*.py' registry auth_server | head -n 200
+  $ grep -RIn 'auth|token|scope' --include='*.md' docs | head -n 200
+  $ find auth_server -type f -name '*.py' 2>/dev/null || true
+  $ find docs -type f 2>/dev/null || true
+
+            ## Answer
+            The authentication flow is described in `docs/registry-auth-architecture.md` and `docs/registry-auth-detailed.md`. However, the specific details of the authentication flow from token validation to user authorization are not provided in the given context. 
+
+For token validation, you may refer to the authentication providers in `auth_server/providers/` such as `cognito.py` (line 1-None, as the exact line number is not provided), `keycloak.py`, or `entra.py`. 
+
+For more information on authentication design, refer to `docs/design/authentication-design.md`.
+
+---
+
+# Question 5
+## Question
+            What are all the API endpoints available in the registry service and what scopes do they require?
+
+            ## Commands Run
+              $ grep -RIn 'token|jwt|bearer|scope|verify_token|oauth' --include='*.py' registry auth_server | head -n 200
+  $ grep -RIn 'auth|token|scope' --include='*.md' docs | head -n 200
+  $ find auth_server -type f -name '*.py' 2>/dev/null || true
+  $ find docs -type f 2>/dev/null || true
+  $ grep -RIn '@router\.(get|post|put|patch|delete)' --include='*.py' registry | head -n 200
+  $ grep -RIn 'APIRouter|include_router' --include='*.py' registry | head -n 100
+  $ grep -RIn 'scope|Security|Depends' --include='*.py' registry | head -n 100
+  $ find registry -name '*.py' -type f
+
+            ## Answer
+            The API endpoints available in the registry service and their required scopes can be found in the following files:
+
+* `registry/api/registry_routes.py`
+* `registry/api/federation_routes.py`
+* `registry/api/federation_export_routes.py`
+* `registry/api/virtual_server_routes.py`
+* `registry/api/search_routes.py`
+* `registry/api/config_routes.py`
+* `registry/api/management_routes.py`
+* `registry/api/agent_routes.py`
+* `registry/api/skill_routes.py`
+* `registry/api/peer_management_routes.py`
+
+Specifically, the scopes required for each endpoint are defined in:
+* `registry/utils/scopes_manager.py` (line numbers not available)
+* `docs/scopes.md` (line numbers not available)
+* `docs/scopes-mgmt.md` (line numbers not available)
+
+Please note that the exact line numbers are not available due to the nature of the provided context. However, the above files should provide the necessary information about the API endpoints and their required scopes.
+
+---
+
+# Question 6
+## Question
+            How would you add support for a new OAuth provider (e.g., Okta) to the authentication system? What files would need to be modified and what interfaces must be implemented?
+
+            ## Commands Run
+              $ grep -RIn 'token|jwt|bearer|scope|verify_token|oauth' --include='*.py' registry auth_server | head -n 200
+  $ grep -RIn 'auth|token|scope' --include='*.md' docs | head -n 200
+  $ find auth_server -type f -name '*.py' 2>/dev/null || true
+  $ find docs -type f 2>/dev/null || true
+  $ grep -RIn 'oauth|provider|OAuthProvider|get_provider' --include='*.py' auth_server registry | head -n 200
+  $ grep -RIn 'oauth|provider' --include='*.md' docs | head -n 200
+  $ find auth_server -type f 2>/dev/null || true
+
+            ## Answer
+            To add support for a new OAuth provider (e.g., Okta) to the authentication system, you would need to modify the following files:
+
+1. `auth_server/providers/__init__.py`: Add an import statement for the new provider module.
+2. `auth_server/providers/factory.py`: Implement a new class in the `auth_server/providers` package that inherits from `auth_server.providers.base.BaseProvider` (defined in `auth_server/providers/base.py`). This class should implement the necessary interfaces for the new OAuth provider.
+3. `auth_server/oauth2_providers.yml`: Add a new configuration entry for the Okta provider.
+
+The `BaseProvider` class (defined in `auth_server/providers/base.py`) is the base class for all OAuth providers, and any new provider class should inherit from it and implement the required methods.
+
+You would need to implement the interfaces defined in `auth_server/providers/base.py` (around line 10-20), which likely include methods such as `authenticate` and `get_user_info`.
+
+Additionally, you might need to modify `auth_server/server.py` (around line 100-150) to handle the new provider, but this depends on how the authentication flow is implemented.
+
+It is also recommended to check the documentation in `docs/design/authentication-design.md` and `docs/idp-provider-support.md` for more information on adding support for new OAuth providers.

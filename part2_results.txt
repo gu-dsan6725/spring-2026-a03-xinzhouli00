@@ -1,0 +1,748 @@
+# Question 1
+Question : What was the total revenue for Electronics category in December 2024?
+Sources  : ['csv']
+
+--- CSV Context ---
+$ head -1 daily_sales.csv
+date,product_id,product_name,category,units_sold,unit_price,total_revenue,region
+
+[pandas aggregations]
+=== Total Revenue by Category ===
+              category total_revenue
+           Electronics   $413,849.85
+              Clothing   $352,019.03
+       Office Supplies   $185,907.72
+        Home & Kitchen   $176,182.67
+     Sports & Outdoors   $175,596.91
+          Pet Supplies   $120,314.34
+Beauty & Personal Care    $94,322.77
+                 Books    $89,979.62
+          Toys & Games    $81,089.72
+        Food & Grocery    $49,399.24
+
+=== December 2024 Revenue by Category ===
+              category total_revenue
+           Electronics   $142,864.31
+              Clothing   $114,178.53
+     Sports & Outdoors    $78,097.51
+        Home & Kitchen    $73,781.62
+       Office Supplies    $59,629.20
+          Pet Supplies    $38,600.83
+Beauty & Personal Care    $33,960.67
+                 Books    $29,641.34
+          Toys & Games    $29,530.42
+        Food & Grocery    $18,492.49
+
+$ grep '2024-12' ...
+2024-12-01,OFFC002,LED Desk Lamp,Office Supplies,17,39.99,679.83,East
+2024-12-01,BEAU003,Electric Toothbrush,Beauty & Personal Care,9,49.99,449.91,West
+2024-12-01,CLTH004,Denim Jeans Classic,Clothing,3,54.99,164.97,South
+2024-12-01,FOOD003,Green Tea Collection,Food & Grocery,13,19.99,259.87,North
+2024-12-01,ELEC003,Portable Power Bank 20000mAh,Electronics,15,40.21,603.15,Central
+2024-12-01,BEAU001,Vitamin C Serum,Beauty & Personal Care,28,28.99,811.72,North
+2024-12-01,SPRT003,Hiking Backpack 40L,Sports & Outdoors,26,74.21,1929.46,Central
+2024-12-01,HOME002,Non-Stick Frying Pan Set,Home & Kitchen,41,45.99,1885.59,Central
+2024-12-01,PETS003,Pet Carrier Medium,Pet Supplies,38,34.99,1329.62,South
+2024-12-01,OFFC003,Notebook Set Premium,Office Supplies,1,18.99,18.99,East
+2024-12-01,BOOK001,Python Programming Guide,Books,25,44.99,1124.75,North
+2024-12-01,BEAU002,Hair Dryer Professional,Beauty & Personal Care,38,52.74,2004.12,North
+2024-12-01,CLTH002,Winter Jacket Women,Clothing,54,129.99,7019.46,Central
+2024-12-01,OFFC003,Notebook Set Premium,Office Supplies,25,15.58,389.5,North
+2024-12-01,BOOK003,Mystery Novel Collection,Books,1,23.67,23.67,East
+2024-12-02,PETS003,Pet Carrier Medium,Pet Supplies,9,37.96,341.64,South
+2024-12-02,ELEC003,Portable Power Bank 20000mAh,Electronics,3,49.99,149.97,West
+2024-12-02,CLTH003,Cotton T-Shirt Pack (3),Clothing,42,29.99,1259.58,North
+2024-12-02,SPRT002,Resistance Bands Set,Sports & Outdoors,46,17.23,792.58,Central
+2024-12-02,SPRT004,Camping Tent 4-Person,Sports & Outdoors,10,149.99,1499.9,Central
+2024-12-02,BEAU003,Electric Toothbrush,Beauty & Personal Care,15,41.02,615.3,West
+2024-12-02,CLTH004,Denim Jeans Classic,Clothing,70,54.99,3849.3,West
+2024-12-02,OFFC004,Wireless Mouse,Office Supplies,13,29.99,389.87,West
+2024-12-02,PETS002,Cat Scratching Post,Pet Supplies,27,37.21,1004.67,South
+2024-12-02,CLTH004,Denim Jeans Classic,Clothing,6,54.99,329.94,East
+2024-12-02,CLTH003,Cotton T-Shirt Pack (3),Clothing,60,29.99,1799.4,East
+2024-12-02,OFFC004,Wireless Mouse,Office Supplies,50,29.99,1499.5,West
+2024-12-02,ELEC003,Portable Power Bank 20000mAh,Electronics,46,49.99,2299.54,North
+2024-12-03,BOOK001,Python Programming Guide,Books,8,44.99,359.92,North
+2024-12-03,PETS002,Cat Scratching Post,Pet Supplies,11,44.99,494.89,West
+2024-12-03,HOME001,Stainless Steel Coffee Maker,Home & Kitchen,23,89.99,2069.77,West
+2024-12-03,SPRT002,Resistance Bands Set,Sports & Outdoors,16,19.99,319.84,Central
+2024-12-03,BEAU003,Electric Toothbrush,Beauty & Personal Care,21,49.99,1049.79,East
+2024-12-03,SPRT004,Camping Tent 4-Person,Sports & Outdoors,10,149.99,1499.9,Central
+2024-12-03,SPRT002,Resistance Bands Set,Sports & Outdoors,12,16.34,196.08,West
+2024-12-03,TOYS003,Remote Control Car,Toys & Games,7,49.99,349.93,West
+2024-12-03,FOOD003,Green Tea Collection,Food & Grocery,15,19.99,299.85,East
+2024-12-03,FOOD001,Organic Coffee Beans 1kg,Food & Grocery,10,24.99,249.9,Central
+2024-12-04,PETS001,Dog Food Premium 10kg,Pet Supplies,45,54.99,2474.55,Central
+2024-12-04,OFFC001,Ergonomic Office Chair,Office Supplies,47,249.99,11749.53,South
+2024-12-04,TOYS002,Board Game Strategy,Toys & Games,25,31.37,784.25,East
+2024-12-04,FOOD002,Protein Bars Box (12),Food & Grocery,50,29.99,1499.5,Central
+2024-12-04,FOOD002,Protein Bars Box (12),Food & Grocery,8,29.99,239.92,West
+2024-12-04,HOME003,Air Fryer 5.5L,Home & Kitchen,33,129.99,4289.67,West
+2024-12-04,HOME001,Stainless Steel Coffee Maker,Home & Kitchen,19,89.99,1709.81,Central
+2024-12-04,CLTH003,Cotton T-Shirt Pack (3),Clothing,63,29.99,1889.37,East
+2024-12-04,HOME002,Non-Stick Frying Pan Set,Home & Kitchen,12,45.99,551.88,North
+2024-12-04,CLTH003,Cotton T-Shirt Pack (3),Clothing,7,26.41,184.87,South
+2024-12-04,HOME001,Stainless Steel Coffee Maker,Home & Kitchen,21,75.08,1576.68,Central
+2024-12-04,SPRT003,Hiking Backpack 40L,Sports & Outdoors,26,79.99,2079.74,North
+2024-12-05,CLTH002,Winter Jacket Women,Clothing,52,129.99,6759.48,Central
+2024-12-05,SPRT004,Camping Tent 4-Person,Sports & Outdoors,16,149.99,2399.84,Central
+2024-12-05,BEAU001,Vitamin C Serum,Beauty & Personal Care,50,25.62,1281.0,East
+2024-12-05,HOME003,Air Fryer 5.5L,Home & Kitchen,29,129.99,3769.71,West
+2024-12-05,HOME002,Non-Stick Frying Pan Set,Home & Kitchen,28,45.99,1287.72,South
+2024-12-05,BEAU003,Electric Toothbrush,Beauty & Personal Care,1,49.99,49.99,West
+2024-12-05,HOME002,Non-Stick Frying Pan Set,Home & Kitchen,46,45.99,2115.54,East
+2024-12-05,ELEC001,Wireless Bluetooth Headphones,Electronics,34,79.99,2719.66,Central
+2024-12-06,FOOD002,Protein Bars Box (12),Food & Grocery,44,29.99,1319.56,East
+2024-12-06,OFFC004,Wireless Mouse,Office Supplies,41,29.99,1229.59,West
+2024-12-06,CLTH002,Winter Jacket Women,Clothing,28,129.99,3639.72,East
+2024-12-06,HOME003,Air Fryer 5.5L,Home & Kitchen,21,129.99,2729.79,East
+2024-12-06,BEAU002,Hair Dryer Professional,Beauty & Personal Care,20,54.07,1081.4,North
+2024-12-06,OFFC001,Ergonomic Office Chair,Office Supplies,
+
+--- Text Context ---
+(not used)
+
+--- Answer ---
+According to the "December 2024 Revenue by Category" table, the total revenue for the Electronics category in December 2024 was $142,864.31.
+
+---
+
+# Question 2
+Question : Which region had the highest sales volume?
+Sources  : ['csv']
+
+--- CSV Context ---
+$ head -1 daily_sales.csv
+date,product_id,product_name,category,units_sold,unit_price,total_revenue,region
+
+[pandas aggregations]
+=== Total Revenue by Category ===
+              category total_revenue
+           Electronics   $413,849.85
+              Clothing   $352,019.03
+       Office Supplies   $185,907.72
+        Home & Kitchen   $176,182.67
+     Sports & Outdoors   $175,596.91
+          Pet Supplies   $120,314.34
+Beauty & Personal Care    $94,322.77
+                 Books    $89,979.62
+          Toys & Games    $81,089.72
+        Food & Grocery    $49,399.24
+
+=== Units Sold by Region ===
+ region  units_sold
+Central        6779
+   East        5678
+  North        5610
+   West        5423
+  South        5314
+
+$ awk units_by_region
+Central
+ 13758.5
+South
+ 11302.6
+East
+ 11221.7
+North
+ 11100.5
+West
+ 10903.7
+
+--- Text Context ---
+(not used)
+
+--- Answer ---
+According to the "Units Sold by Region" table, the Central region had the highest sales volume with 6,779 units sold. Additionally, the `awk units_by_region` output confirms this, showing that the Central region had the highest units sold at 13,758.5.
+
+---
+
+# Question 3
+Question : What are the key features of the Wireless Bluetooth Headphones?
+Sources  : ['text']
+
+--- CSV Context ---
+(not used)
+
+--- Text Context ---
+=== ELEC001 (ELEC001_product_page.txt) [score=15] ===
+
+Key Features:
+- Active Noise Cancellation (ANC) with transparency mode
+- Bluetooth 5.2 for stable connectivity up to 30ft range
+- 40-hour battery life, quick charge (10 min = 3 hours playback)
+- Premium memory foam ear cushions for all-day comfort
+- Foldable design with carrying case included
+- Built-in microphone for calls and voice assistant
+
+Technical Specifications:
+- Driver size: 40mm
+- Frequency response: 20Hz - 20kHz
+- Impedance: 32 ohms
+- Weight: 254g
+
+CUSTOMER REVIEWS:
+----------------------------------------
+
+Review 1 - Sarah M. (Verified Purchase) - 5 stars
+"Best headphones I've ever owned! The noise cancellation is incredible - I can't
+hear my noisy neighbors anymore. Battery lasts forever and they're super comfortable
+even during long work sessions. Worth every penny!"
+
+Review 2 - Mike T. (Verified Purchase) - 4 stars
+"Great sound quality and the ANC works well. Only giving 4 stars because the
+Bluetooth occasionally drops when my phone is in my back pocket. Otherwise fantastic
+value for the price."
+
+Review 3 - Jennifer L. (Verified Purchase) - 5 stars
+"I use these for my daily 2-hour commute and they've been a game changer. The
+transparency mode is perfect for announcements on the train. Very impressed with
+build quality."
+
+Review 4 - David R. (Verified Purchase) - 3 stars
+"Sound is good but they feel a bit tight on my head. After about 2 hours I need
+to take a break. The noise cancellation is decent but not as good as the premium
+brands. Good for the price though."
+
+Review 5 - Amanda K. (Verified Purchase) - 5 stars
+"Bought these for my son's birthday and he absolutely loves them. Great for
+gaming and music. The microphone quality is surprisingly good for video calls too."
+
+Average Rating: 4.4/5 (2,847 reviews)
+----------------------------------------
+
+=== OFFC001 (OFFC001_product_page.txt) [score=3] ===
+
+Key Features:
+- Adjustable lumbar support (height and depth)
+- 4D adjustable armrests (height, width, depth, angle)
+- Breathable mesh back for temperature regulation
+- High-density foam seat cushion
+- Adjustable headrest with neck support
+- Seat height adjustment (gas lift)
+- Seat depth adjustment
+- Tilt tension control with lock
+- 360-degree swivel
+- Heavy-duty base with smooth-rolling casters
+- Weight capacity: 300 lbs
+
+Dimensions:
+- Seat width: 20"
+- Seat depth: 17-20" (adjustable)
+- Back height: 24"
+- Overall height: 45-52"
+
+Certifications:
+- BIFMA certified
+- Greenguard certified (low emissions)
+
+Warranty: 5 years
+
+CUSTOMER REVIEWS:
+----------------------------------------
+
+Review 1 - Robert P. (Verified Purchase) - 5 stars
+"After years of back pain from cheap office chairs, I finally invested in this
+one. Game changer! The lumbar support is incredible and I can work 10+ hours
+without discomfort. Assembly took about 45 minutes but instructions were clear."
+
+Review 2 - Amanda L. (Verified Purchase) - 5 stars
+"Working from home required a better chair - this exceeded expectations. The mesh
+back keeps me cool during summer, and the armrests adjust every which way. It's
+like they designed it for my body specifically. Worth every penny!"
+
+Review 3 - David M. (Verified Purchase) - 4 stars
+"Solid chair with great features. The only downside is the headrest doesn't quite
+reach the right position for me (I'm 6'4"). But the lumbar and seat are perfect.
+Still a huge upgrade from my previous chair."
+
+Review 4 - Sarah K. (Verified Purchase) - 5 stars
+"I'm a software developer and sit for 8-10 hours daily. This chair has eliminated
+my chronic lower back pain. The adjustability is fantastic - took me a few days to
+find my perfect settings but now it's perfection."
+
+Review 5 - Paul H. (Verified Purchase) - 4 stars
+"Great quality chair. Feels premium and looks professional in my home office.
+Assembly was straightforward. Only wish is that the seat cushion was a bit softer -
+it's quite firm, though I suppose that's better for support."
+
+Average Rating: 4.6/5 (1,876 reviews)
+----------------------------------------
+
+=== CLTH001 (CLTH001_product_page.txt) [score=2] ===
+
+Key Features:
+- Responsive foam midsole for energy return
+- Breathable engineered mesh upper
+- Reinforced heel counter for stability
+- Rubber outsole with multi-directional traction pattern
+- Padded collar and tongue for comfort
+- Reflective details for visibility in low light
+- Removable insole (compatible with orthotics)
+- Weight: 9.8 oz (size 10)
+
+Available Sizes: 7-14 (including half sizes)
+Available Colors: Black/White, Navy/Red, Grey/Lime, All Black
+
+Best For:
+- Road running
+- Treadmill workouts
+- Daily training
+- Casual athleisure wear
+
+CUSTOMER REVIEWS:
+----------------------------------------
+
+Review 1 - Jason K. (Verified Purchase) - 5 stars
+"These shoes are amazing for the price! I've run 200+ miles in them and they still
+feel great. The cushioning is perfect for my daily 5K runs. True to size and the
+breathability keeps my feet cool. Highly recommend!"
+
+Review 2 - Mark D. (Verified Purchase) - 4 stars
+"Solid running shoes. Good cushioning and support for my flat feet. The only issue
+is they run slightly narrow - I have wide feet and had to go up half a size. Once I
+got the right fit, they've been great for my marathon training."
+
+Review 3 - Chris L. (Verified Purchase) - 5 stars
+"Just finished a half marathon in these and zero complaints. No blisters, no hot
+spots, just comfortable miles. The traction was excellent even on wet pavement.
+Will definitely buy another pair when these wear out."
+
+Review 4 - Steven R. (Verified Purchase) - 5 stars
+"Best value running shoes I've owned. Compare favorably to shoes twice the price.
+The foam cushioning bounces back nicely and hasn't compressed after 3 months of
+regular use. The reflective details are a nice safety touch."
+
+Review 5 - Brian T. (Verified Purchase) - 4 stars
+"Good everyday training shoe. Not quite enough support for my long runs (15+ miles)
+but perfect for shorter distances and speedwork. Love the Navy/
+
+--- Answer ---
+The key features of the Wireless Bluetooth Headphones (ELEC001) are:
+
+1. Active Noise Cancellation (ANC) with transparency mode
+2. Bluetooth 5.2 for stable connectivity up to 30ft range
+3. 40-hour battery life, quick charge (10 min = 3 hours playback)
+4. Premium memory foam ear cushions for all-day comfort
+5. Foldable design with carrying case included
+6. Built-in microphone for calls and voice assistant
+
+These features are mentioned in the ELEC001 product page (ELEC001_product_page.txt).
+
+---
+
+# Question 4
+Question : What do customers say about the Air Fryer's ease of cleaning?
+Sources  : ['text']
+
+--- CSV Context ---
+(not used)
+
+--- Text Context ---
+=== HOME003 (HOME003_product_page.txt) [score=16] ===
+
+CUSTOMER REVIEWS:
+----------------------------------------
+
+Review 1 - Patricia W. (Verified Purchase) - 5 stars
+"This air fryer has completely changed how I cook! Made the crispiest french fries
+I've ever had at home. My kids now prefer my homemade chicken nuggets over fast food.
+Easy to clean and the presets work perfectly."
+
+Review 2 - Robert H. (Verified Purchase) - 5 stars
+"Finally replaced my old deep fryer and couldn't be happier. Everything comes out
+crispy without the guilt. Made salmon last night and it was restaurant quality.
+The 5.5L size is perfect for our family of 4."
+
+Review 3 - Lisa G. (Verified Purchase) - 4 stars
+"Great product overall. Takes a bit of learning to get temperatures right for
+different foods. Wish the cord was longer - had to rearrange my counter. But the
+food quality is excellent and cleanup is a breeze."
+
+Review 4 - James C. (Verified Purchase) - 5 stars
+"I was skeptical about air fryers but this one converted me. Made wings for game
+day and they were incredible. The basket size is generous - I can fit 2 lbs of wings
+easily. Highly recommend!"
+
+Review 5 - Maria S. (Verified Purchase) - 4 stars
+"Good air fryer, heats up quickly and cooks evenly. The only downside is it's a
+bit loud during operation. But the results are worth it - everything is so crispy!"
+
+Average Rating: 4.6/5 (5,234 reviews)
+----------------------------------------
+
+=== OFFC001 (OFFC001_product_page.txt) [score=11] ===
+
+CUSTOMER REVIEWS:
+----------------------------------------
+
+Review 1 - Robert P. (Verified Purchase) - 5 stars
+"After years of back pain from cheap office chairs, I finally invested in this
+one. Game changer! The lumbar support is incredible and I can work 10+ hours
+without discomfort. Assembly took about 45 minutes but instructions were clear."
+
+Review 2 - Amanda L. (Verified Purchase) - 5 stars
+"Working from home required a better chair - this exceeded expectations. The mesh
+back keeps me cool during summer, and the armrests adjust every which way. It's
+like they designed it for my body specifically. Worth every penny!"
+
+Review 3 - David M. (Verified Purchase) - 4 stars
+"Solid chair with great features. The only downside is the headrest doesn't quite
+reach the right position for me (I'm 6'4"). But the lumbar and seat are perfect.
+Still a huge upgrade from my previous chair."
+
+Review 4 - Sarah K. (Verified Purchase) - 5 stars
+"I'm a software developer and sit for 8-10 hours daily. This chair has eliminated
+my chronic lower back pain. The adjustability is fantastic - took me a few days to
+find my perfect settings but now it's perfection."
+
+Review 5 - Paul H. (Verified Purchase) - 4 stars
+"Great quality chair. Feels premium and looks professional in my home office.
+Assembly was straightforward. Only wish is that the seat cushion was a bit softer -
+it's quite firm, though I suppose that's better for support."
+
+Average Rating: 4.6/5 (1,876 reviews)
+----------------------------------------
+
+=== FOOD001 (FOOD001_product_page.txt) [score=3] ===
+
+CUSTOMER REVIEWS:
+----------------------------------------
+
+Review 1 - Coffee Lover (Verified Purchase) - 5 stars
+"This is the best coffee I've had outside of a specialty cafe! The chocolate notes
+are prominent and the finish is so smooth. No bitterness at all. I've subscribed
+for monthly delivery - that's how much I love it."
+
+Review 2 - Nancy G. (Verified Purchase) - 5 stars
+"My husband is very picky about coffee and he approves! Great for French press and
+pour-over. The beans are fresh and aromatic. Love that it's organic and fair trade.
+Feels good to enjoy quality coffee ethically."
+
+Review 3 - Tom R. (Verified Purchase) - 4 stars
+"Really good coffee, fresh roast, nice flavor profile. I prefer a darker roast
+personally but this medium roast is excellent for what it is. The citrus notes
+are subtle and pleasant. Will order again."
+
+Review 4 - Maria P. (Verified Purchase) - 5 stars
+"Makes the perfect espresso! The crema is beautiful and the taste is balanced.
+I've tried many organic coffees and this is by far the best. The resealable bag
+keeps it fresh. Highly recommend for espresso lovers!"
+
+Review 5 - Jake H. (Verified Purchase) - 4 stars
+"Solid everyday coffee. Fresh, flavorful, and smooth. My only minor gripe is I
+wish they offered a dark roast option. But for medium roast fans, this is
+excellent. Fast shipping too - arrived within 3 days."
+
+Average Rating: 4.6/5 (4,123 reviews)
+----------------------------------------
+
+--- Answer ---
+According to the customer reviews on the HOME003 product page, customers have mentioned that the Air Fryer is "Easy to clean" (Review 1 - Patricia W.) and that "cleanup is a breeze" (Review 3 - Lisa G.). This suggests that customers find the Air Fryer to be relatively easy to clean.
+
+---
+
+# Question 5
+Question : Which product has the best customer reviews and how well is it selling?
+Sources  : ['csv', 'text']
+
+--- CSV Context ---
+$ head -1 daily_sales.csv
+date,product_id,product_name,category,units_sold,unit_price,total_revenue,region
+
+[pandas aggregations]
+
+=== Top 15 Products by Units Sold ===
+                 product_name  units_sold
+ Portable Power Bank 20000mAh        1587
+            Running Shoes Men        1324
+           USB-C Fast Charger        1322
+Wireless Bluetooth Headphones        1219
+      Cotton T-Shirt Pack (3)        1216
+          Denim Jeans Classic        1112
+          Winter Jacket Women        1098
+              Smart Watch Pro        1074
+     Python Programming Guide         984
+               Wireless Mouse         939
+          Cat Scratching Post         917
+        Dog Food Premium 10kg         886
+           The Art of Cooking         838
+     Mystery Novel Collection         835
+           Pet Carrier Medium         820
+
+--- Text Context ---
+=== BEAU001 (BEAU001_product_page.txt) [score=19] ===
+
+CUSTOMER REVIEWS:
+----------------------------------------
+
+Review 1 - Nicole T. (Verified Purchase) - 5 stars
+"I've been using this serum for 8 weeks and the results are incredible! My dark
+spots from sun damage have faded significantly. My skin looks so much brighter and
+more even. I've tried expensive brands and this works just as well!"
+
+Review 2 - Rachel M. (Verified Purchase) - 5 stars
+"This serum has transformed my skin! I'm 45 and people keep asking what I'm using.
+The texture is perfect - not sticky at all. Absorbs quickly and layers well under
+makeup. Worth every penny."
+
+Review 3 - Ashley P. (Verified Purchase) - 4 stars
+"Good serum with visible results. The only reason I'm not giving 5 stars is because
+it has a slight orange tint that concerned me at first (apparently normal for
+Vitamin C). Otherwise, love the results after 6 weeks of use."
+
+Review 4 - Kim H. (Verified Purchase) - 3 stars
+"Decent product but caused some irritation initially. Had to start with every other
+day application. Now my skin has adjusted and I see improvement in brightness. If
+you have sensitive skin, introduce it slowly."
+
+Review 5 - Danielle F. (Verified Purchase) - 5 stars
+"I've repurchased this 3 times already! It's my holy grail product. My acne scars
+have faded and my skin glows. The dropper makes it easy to apply. Just make sure to
+store it in a cool, dark place."
+
+Average Rating: 4.3/5 (8,567 reviews)
+----------------------------------------
+
+=== PETS001 (PETS001_product_page.txt) [score=16] ===
+
+CUSTOMER REVIEWS:
+----------------------------------------
+
+Review 1 - Jessica T. (Verified Purchase) - 5 stars
+"My golden retriever has never been healthier! His coat is so shiny and he has so
+much energy. He used to have digestive issues but since switching to this food,
+no more problems. He absolutely loves the taste too!"
+
+Review 2 - Mark W. (Verified Purchase) - 5 stars
+"Finally found a dog food my picky eater loves! My french bulldog has allergies
+and this food doesn't trigger them. The ingredient list is actually readable -
+real food, not mystery fillers. Great quality."
+
+Review 3 - Linda C. (Verified Purchase) - 4 stars
+"Good quality dog food. My lab mix enjoys it and his stools are more consistent
+now. A bit pricey but you get what you pay for. The bag could use a better reseal
+mechanism though - had to transfer to a container."
+
+Review 4 - Steve B. (Verified Purchase) - 5 stars
+"Our vet recommended a higher quality food and this fit the bill. Two months in
+and our 8-year-old border collie has more energy than ever. Her joints seem less
+stiff too - probably the glucosamine. Highly recommend!"
+
+Review 5 - Emily R. (Verified Purchase) - 4 stars
+"Solid dog food with quality ingredients. My corgi loves it. Only giving 4 stars
+because the kibble size is a bit large for smaller dogs - I have to break some
+pieces for my small pup. Otherwise excellent product."
+
+Average Rating: 4.5/5 (6,432 reviews)
+----------------------------------------
+
+=== FOOD001 (FOOD001_product_page.txt) [score=15] ===
+
+CUSTOMER REVIEWS:
+----------------------------------------
+
+Review 1 - Coffee Lover (Verified Purchase) - 5 stars
+"This is the best coffee I've had outside of a specialty cafe! The chocolate notes
+are prominent and the finish is so smooth. No bitterness at all. I've subscribed
+for monthly delivery - that's how much I love it."
+
+Review 2 - Nancy G. (Verified Purchase) - 5 stars
+"My husband is very picky about coffee and he approves! Great for French press and
+pour-over. The beans are fresh and aromatic. Love that it's organic and fair trade.
+Feels good to enjoy quality coffee ethically."
+
+Review 3 - Tom R. (Verified Purchase) - 4 stars
+"Really good coffee, fresh roast, nice flavor profile. I prefer a darker roast
+personally but this medium roast is excellent for what it is. The citrus notes
+are subtle and pleasant. Will order again."
+
+Review 4 - Maria P. (Verified Purchase) - 5 stars
+"Makes the perfect espresso! The crema is beautiful and the taste is balanced.
+I've tried many organic coffees and this is by far the best. The resealable bag
+keeps it fresh. Highly recommend for espresso lovers!"
+
+Review 5 - Jake H. (Verified Purchase) - 4 stars
+"Solid everyday coffee. Fresh, flavorful, and smooth. My only minor gripe is I
+wish they offered a dark roast option. But for medium roast fans, this is
+excellent. Fast shipping too - arrived within 3 days."
+
+Average Rating: 4.6/5 (4,123 reviews)
+----------------------------------------
+
+--- Answer ---
+Based on the provided data, the product with the best customer reviews is the dog food with an average rating of 4.5/5 (6,432 reviews) from the file "PETS001_product_page.txt". However, another product, the coffee from "FOOD001_product_page.txt", has an average rating of 4.6/5 (4,123 reviews), which is even higher.
+
+To determine how well these products are selling, we can refer to the "Top 15 Products by Units Sold" table. The "Dog Food Premium 10kg" is ranked 12th with 886 units sold. Unfortunately, the coffee product is not listed in the top 15 products by units sold, so we cannot directly compare its sales performance to the other products.
+
+Therefore, based on the available data, the product with the best customer reviews that is also selling relatively well is the "Dog Food Premium 10kg" with 886 units sold and an average rating of 4.5/5. However, it's worth noting that the coffee product has a higher average rating, but its sales performance is unknown.
+
+---
+
+# Question 6
+Question : I want a product for fitness that is highly rated and sells well in the West region. What do you recommend?
+Sources  : ['csv', 'text']
+
+--- CSV Context ---
+$ head -1 daily_sales.csv
+date,product_id,product_name,category,units_sold,unit_price,total_revenue,region
+
+[pandas aggregations]
+
+=== Units Sold by Region ===
+ region  units_sold
+Central        6779
+   East        5678
+  North        5610
+   West        5423
+  South        5314
+
+=== Top 10 Products in West Region (units sold) ===
+                 product_name  units_sold
+          Denim Jeans Classic         342
+            Running Shoes Men         301
+      Cotton T-Shirt Pack (3)         269
+Wireless Bluetooth Headphones         265
+     Python Programming Guide         250
+     Organic Coffee Beans 1kg         233
+         Notebook Set Premium         233
+           USB-C Fast Charger         219
+               Air Fryer 5.5L         212
+               Wireless Mouse         200
+
+=== Top 15 Products by Units Sold ===
+                 product_name  units_sold
+ Portable Power Bank 20000mAh        1587
+            Running Shoes Men        1324
+           USB-C Fast Charger        1322
+Wireless Bluetooth Headphones        1219
+      Cotton T-Shirt Pack (3)        1216
+          Denim Jeans Classic        1112
+          Winter Jacket Women        1098
+              Smart Watch Pro        1074
+     Python Programming Guide         984
+               Wireless Mouse         939
+          Cat Scratching Post         917
+        Dog Food Premium 10kg         886
+           The Art of Cooking         838
+     Mystery Novel Collection         835
+           Pet Carrier Medium         820
+
+$ awk units_by_region
+Central
+ 13758.5
+South
+ 11302.6
+East
+ 11221.7
+North
+ 11100.5
+West
+ 10903.7
+
+--- Text Context ---
+=== PETS001 (PETS001_product_page.txt) [score=10] ===
+
+CUSTOMER REVIEWS:
+----------------------------------------
+
+Review 1 - Jessica T. (Verified Purchase) - 5 stars
+"My golden retriever has never been healthier! His coat is so shiny and he has so
+much energy. He used to have digestive issues but since switching to this food,
+no more problems. He absolutely loves the taste too!"
+
+Review 2 - Mark W. (Verified Purchase) - 5 stars
+"Finally found a dog food my picky eater loves! My french bulldog has allergies
+and this food doesn't trigger them. The ingredient list is actually readable -
+real food, not mystery fillers. Great quality."
+
+Review 3 - Linda C. (Verified Purchase) - 4 stars
+"Good quality dog food. My lab mix enjoys it and his stools are more consistent
+now. A bit pricey but you get what you pay for. The bag could use a better reseal
+mechanism though - had to transfer to a container."
+
+Review 4 - Steve B. (Verified Purchase) - 5 stars
+"Our vet recommended a higher quality food and this fit the bill. Two months in
+and our 8-year-old border collie has more energy than ever. Her joints seem less
+stiff too - probably the glucosamine. Highly recommend!"
+
+Review 5 - Emily R. (Verified Purchase) - 4 stars
+"Solid dog food with quality ingredients. My corgi loves it. Only giving 4 stars
+because the kibble size is a bit large for smaller dogs - I have to break some
+pieces for my small pup. Otherwise excellent product."
+
+Average Rating: 4.5/5 (6,432 reviews)
+----------------------------------------
+
+=== BEAU001 (BEAU001_product_page.txt) [score=9] ===
+
+CUSTOMER REVIEWS:
+----------------------------------------
+
+Review 1 - Nicole T. (Verified Purchase) - 5 stars
+"I've been using this serum for 8 weeks and the results are incredible! My dark
+spots from sun damage have faded significantly. My skin looks so much brighter and
+more even. I've tried expensive brands and this works just as well!"
+
+Review 2 - Rachel M. (Verified Purchase) - 5 stars
+"This serum has transformed my skin! I'm 45 and people keep asking what I'm using.
+The texture is perfect - not sticky at all. Absorbs quickly and layers well under
+makeup. Worth every penny."
+
+Review 3 - Ashley P. (Verified Purchase) - 4 stars
+"Good serum with visible results. The only reason I'm not giving 5 stars is because
+it has a slight orange tint that concerned me at first (apparently normal for
+Vitamin C). Otherwise, love the results after 6 weeks of use."
+
+Review 4 - Kim H. (Verified Purchase) - 3 stars
+"Decent product but caused some irritation initially. Had to start with every other
+day application. Now my skin has adjusted and I see improvement in brightness. If
+you have sensitive skin, introduce it slowly."
+
+Review 5 - Danielle F. (Verified Purchase) - 5 stars
+"I've repurchased this 3 times already! It's my holy grail product. My acne scars
+have faded and my skin glows. The dropper makes it easy to apply. Just make sure to
+store it in a cool, dark place."
+
+Average Rating: 4.3/5 (8,567 reviews)
+----------------------------------------
+
+=== BOOK001 (BOOK001_product_page.txt) [score=8] ===
+
+CUSTOMER REVIEWS:
+----------------------------------------
+
+Review 1 - Alex C. (Verified Purchase) - 5 stars
+"This book took me from zero programming knowledge to building my own web app in
+3 months. The explanations are clear, and the exercises really reinforce the
+concepts. Dr. Mitchell has a gift for making complex topics accessible."
+
+Review 2 - Jennifer W. (Verified Purchase) - 5 stars
+"As a self-taught programmer, I had gaps in my knowledge. This book filled them
+all. The OOP section finally made inheritance click for me. The projects at the end
+of each chapter are practical and relevant. Highly recommend!"
+
+Review 3 - Daniel K. (Verified Purchase) - 4 stars
+"Great content and well-structured. The only reason for 4 stars is some of the
+advanced chapters move a bit fast. But for beginners, the first 2/3 of the book
+is absolutely perfect. Worth the investment."
+
+Review 4 - Michelle P. (Verified Purchase) - 5 stars
+"I'm a teacher and I use this book for my high school programming class. Students
+love it! The examples are engaging and the progression is logical. The online
+resources are an excellent bonus."
+
+Review 5 - Ryan H. (Verified Purchase) - 4 stars
+"Solid programming book. Covers a lot of ground. Some sections feel rushed,
+especially machine learning - that topic really deserves its own book. But as an
+all-in-one Python guide, it's excellent value."
+
+Average Rating: 4.6/5 (2,234 reviews)
+----------------------------------------
+
+--- Answer ---
+Based on the provided data, I recommend the "Running Shoes Men" product for fitness that is highly rated and sells well in the West region. 
+
+According to the "Top 10 Products in West Region (units sold)" table, "Running Shoes Men" has sold 301 units in the West region. Additionally, in the "Top 15 Products by Units Sold" table, "Running Shoes Men" has sold 1324 units overall, indicating its popularity.
+
+Although there are no specific customer reviews provided for "Running Shoes Men", its high sales figures suggest that it is a well-liked product. If you'd like to consider other products with available customer reviews, the "Python Programming Guide" book has an average rating of 4.6/5 (2,234 reviews) and has sold 250 units in the West region, but it may not be directly related to fitness.
